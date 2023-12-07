@@ -1,29 +1,73 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using System.Collections.Generic;
 
 namespace CarShoppie
 {
     public class Cars
     {
-        public class Brands
+        public string BrandModelName { get; set; }
+        public string[] PackageName = new string[2];
+        public string[] ToolName = new string[10];
+        public int[] ToolWeHaveNumber = new int[10];
+
+        public void carShow(Cars theCar)
         {
-            public string BrandModelName { get; set; }
-
-            public class ModelPackage
+            for (int i = 0; i < 2; i++) 
             {
-                public string[] PackageName = new string[2];
+                Console.WriteLine(theCar.BrandModelName);
+                Console.WriteLine(theCar.PackageName[i]);
 
-                public class Tools
+                for (int j = 0; j < 10; j++)
                 {
-                    public string[] ToolName = new string[10];
-                    public int ToolWeHaveNumber { get; set; }
+                    Console.WriteLine(theCar.ToolName[i]);
+                    Console.WriteLine(theCar.ToolWeHaveNumber[i]);
                 }
             }
         }
+
+        public void carDataCreate(Cars theCar)
+        {
+            string[] carBrandModelFolder = theCar.BrandModelName.Split(" ");
+            string carBrandModelFolderName = "";
+            for (int filenameWord = 0; filenameWord < carBrandModelFolder.Length; filenameWord++)
+            {
+                carBrandModelFolderName += carBrandModelFolder[filenameWord];
+                if (filenameWord != carBrandModelFolder.Length-1)
+                    carBrandModelFolderName += "_";
+            }
+
+            carBrandModelFolderName = carBrandModelFolderName.ToLower();
+
+            string NewBrand = carBrandModelFolderName;
+            string projectPath = AppDomain.CurrentDomain.BaseDirectory;
+            projectPath += "\\theDatabase\\carsTotalData";
+            string folderPath = Path.Combine(projectPath, NewBrand);
+
+            if (Directory.Exists(folderPath))
+            {
+                Console.WriteLine($"Klasör var: {folderPath}");
+            }
+            else
+            {
+                Console.WriteLine($"Klasör yok: {folderPath}");
+                Directory.CreateDirectory(folderPath);
+            }
+
+            if (Directory.Exists(folderPath))
+            {
+                Console.WriteLine($"Klasör var: {folderPath}");
+            }
+            else
+            {
+                Console.WriteLine($"Klasör yok: {folderPath}");
+            }
+
+        }
+
+
+        
     }
-
-    // bunu yeni yazdim
-
 
 
 
@@ -62,6 +106,14 @@ namespace CarShoppie
                 {
                     Console.Clear();
                     Console.WriteLine("admin login basliyooooo");
+
+                    Console.WriteLine("YENİ ARABA MARKASI MODELİ GİR : ");
+                    Cars newCar = new Cars();
+                    newCar.BrandModelName = Console.ReadLine();
+
+
+                    newCar.carDataCreate(newCar);
+                    
                 }
                 else if (choice == 2)
                 {
@@ -75,16 +127,22 @@ namespace CarShoppie
                 }
                 
 
+                else
+                { 
+                    Console.Clear();
+                    Console.WriteLine("See you again...");
+                    break; 
+                }
 
-                Console.WriteLine("Do you have another request?");
-                Console.WriteLine("Type 1 to YES, Type 2 to NO : ");
+                Console.WriteLine("Do you have any request??");
+                Console.WriteLine("Type 1 - YES // Type 2 - No : ");
                 int continchoice;
-                while (!(int.TryParse(Console.ReadLine(), out continchoice) && continchoice == 1 || continchoice == 2))
+                while (!(int.TryParse(Console.ReadLine(), out continchoice) && continchoice >= 1 && continchoice <= 2))
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid selection. Please, try again...");
-                    Console.WriteLine("Do you have another request?");
-                    Console.WriteLine("Type 1 to YES, Type 2 to NO : ");
+                    Console.WriteLine("Do you have any request??");
+                    Console.WriteLine("Type 1 - YES // Type 2 - No : ");
                 }
 
                 if (continchoice == 1)
@@ -95,8 +153,8 @@ namespace CarShoppie
                     Console.WriteLine("Type 3 = Dealer Login");
                     Console.WriteLine("Type 0 = EXIT");
                     Console.WriteLine("Please, select the action you want to take : ");
-                    int rechoice;
-                    while (!(int.TryParse(Console.ReadLine(), out rechoice) && rechoice >= 0 && rechoice <= 3))
+                    choice = 0;
+                    while (!(int.TryParse(Console.ReadLine(), out choice) && choice >= 0 && choice <= 3))
                     {
                         Console.Clear();
                         Console.WriteLine("Invalid selection. Please, try again...");
@@ -106,91 +164,18 @@ namespace CarShoppie
                         Console.WriteLine("Type 0 = EXIT");
                         Console.WriteLine("Please, select the action you want to take : ");
                     }
-                    if (rechoice == 0)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("See you again...");
-                        break;
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        continue;
-                    }
-
                 }
                 else
-                { 
+                {
                     Console.Clear();
                     Console.WriteLine("See you again...");
-                    break; 
+                    break;
                 }
+                    
+
 
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*
-                        string NewBrand = "NewBrand";
-                        string projectPath = AppDomain.CurrentDomain.BaseDirectory;
-                        projectPath += "\\theDatabase\\carsTotalData";
-                        string folderPath = Path.Combine(projectPath, NewBrand);
-
-                        if (Directory.Exists(folderPath))
-                        {
-                            Console.WriteLine($"Klasör var: {folderPath}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Klasör yok: {folderPath}");
-                            Directory.CreateDirectory(folderPath);
-                        }
-
-                        if (Directory.Exists(folderPath))
-                        {
-                            Console.WriteLine($"Klasör var: {folderPath}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Klasör yok: {folderPath}");
-                        }
-
-                        */
-
         }
     }
 }
